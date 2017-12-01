@@ -1,8 +1,11 @@
 // ==UserScript==
 // @name         DevChecker
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  Check Developers and testers in vk.com!
+// @copyright 2017, flyink13 (https://openuserjs.org/users/flyink13)
+// @updateURL https://openuserjs.org/meta/flyink13/DevChecker.meta.js
+// @license MIT
 // @author       Flyink13
 // @match        https://vk.com/*
 // @grant        none
@@ -59,7 +62,12 @@ function DevUsers() {
             icon.title = groups[type].title; // Подсказка
             icon.style.background = groups[type].background; // Иконка
             icon.onmouseover = function () {
-                showTooltip(icon, {force: 1, text: icon.title, black: 1});
+                if(!showTooltip) return;
+                showTooltip(icon, {
+                	force: 1,
+                	black: 1,
+                	content: '<div class="tt_text wrapped">' + icon.title + '</div>'
+                });
             };
             link.appendChild(icon); // Добавляем ссылку в ссылку
         });
