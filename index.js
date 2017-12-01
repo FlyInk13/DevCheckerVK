@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DevChecker
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  Check Developers and testers in vk.com!
 // @copyright 2017, flyink13 (https://openuserjs.org/users/flyink13)
 // @updateURL https://openuserjs.org/meta/flyink13/DevChecker.meta.js
@@ -34,16 +34,20 @@ function DevUsers() {
 
     function insertStyles() { // Фукция иниацилизации стилей
         var style = document.createElement("style"); // Создаем элемент стилей
-        style.innerHTML =
-            '.user_checker_icon {' + // css стили
+        style.innerHTML = // css стили// css стили
+            '.user_checker_icon {' +
             '   width: 12px; height: 12px; border-radius: 12px;' +
-            '   display: inline-block;  margin: 0px 0px -1px 2px; position: relative;' +
+            '   display: inline-block;  margin: 0px 0px -1px 2px;' +
+            '   transition: transform .2s; position: relative;' +
+            '}' +
+            '.user_checker_icon:hover {' +
+            '    transform: scale(1.2);' +
             '}';
         document.head.appendChild(style); // Добавляем в залоговок
     }
 
     function checkLinks(el) { // Функция поиска в элементе ссылок
-        var links = el.querySelectorAll('.im-mess-stack--lnk, .author, .friends_field a');
+        var links = el.querySelectorAll('.im-mess-stack--lnk, .author, .friends_field a, .im-member-item--name a');
         if (!links) return; // Если в элементе нет ссылок, то пропускаем
         Array.from(links).map(function (link) { // Если есть, то перебираем
             if (link.checked) return; // Если ссылка проверена, то пропускаем
