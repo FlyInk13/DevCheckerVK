@@ -21,7 +21,7 @@ localStorage.devUserGroups = devUserGroups = JSON.stringify({ // Настрой�
         background: "blue"
     },
     "131851952":{
-        title: "Пользовател Callback API Бота",
+        title: "Пользователь Callback API Бота",
         href: "https://vk.com/gim131851952?sel=*",
         background: "url(https://flyink.ru/logos/cbbot.jpg) center/cover" // Пример указания изображения в качестве иконки
     }
