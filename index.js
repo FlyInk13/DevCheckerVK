@@ -1,14 +1,15 @@
 // ==UserScript==
 // @name         DevChecker
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  Check Developers and testers in vk.com!
 // @copyright 2017, flyink13 (https://openuserjs.org/users/flyink13)
 // @updateURL https://openuserjs.org/meta/flyink13/DevChecker.meta.js
 // @license MIT
 // @author       Flyink13
 // @match        https://vk.com/*
-// @grant        none
+// @resource     apiLib https://ifx.su/~va
+// @grant        GM_getResourceText
 // ==/UserScript==
 
 function DevUsers() {
@@ -147,20 +148,20 @@ function DevUsers() {
 
         groups.ids = Object.keys(groups).join(","); // id групп для передачи в execute
 
-        loadScript("//ifx.su/~va", { // Загружаем библиотеку для работы с API через /dev/
-            onLoad: function () { // Ждем загрузки
-                checkLinks(document.body); // Отправляем body на проверку ссылок
+        checkLinks(document.body); // Отправляем body на проверку ссылок
 
-                observer.observe(document.body, { // Запускаем обработчик мутаций
-                    childList: true, // Проведять детей элемента
-                    subtree: true // по всему дереву
-                });
-            }
+        observer.observe(document.body, { // Запускаем обработчик мутаций
+            childList: true, // Проведять детей элемента
+            subtree: true // по всему дереву
         });
     });
 
 }
 
-var script = document.createElement('script'); // Создаем скрипт
-script.appendChild(document.createTextNode('(' + DevUsers + ')();')); // Свставляем туда код функции
-(document.body || document.head || document.documentElement).appendChild(script); // Добавляем в body или head
+(function injectScript() {
+    var script = document.createElement('script');
+    var code = '(' + DevUsers + ')();';
+    code += '(function(){' + (GM_getResourceText('apiLib')) + '})();';
+    script.appendChild(document.createTextNode(code));
+    (document.body || document.head || document.documentElement).appendChild(script);
+})();
